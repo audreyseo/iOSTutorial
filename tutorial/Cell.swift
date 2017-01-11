@@ -17,6 +17,7 @@ class Cell:UITableViewCell {
 		l.translatesAutoresizingMaskIntoConstraints = false
 		l.text = "Sample"
 		l.font = UIFont.systemFont(ofSize: 15)
+		return l
 	}() // Run the closure
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
