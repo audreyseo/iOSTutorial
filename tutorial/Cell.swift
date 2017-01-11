@@ -39,5 +39,6 @@ class Cell:UITableViewCell {
 		addSubview(nameLabel)
 		
 		myConstraints(vf: "H:|-16-[v0]->=16-|", views: ["v0": nameLabel])
+		myConstraints(vf: "V:|-8-[v0]-8-|", views: ["v0": nameLabel])
 	}
 }

@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
 	let cellId = "cellId"
 	
-	var items:[String] = [String]()
+	var items:[String] = ["Hello World"]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -36,6 +36,7 @@ class ViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let c = tableView.dequeueReusableCell(withIdentifier: cellId) as! Cell
 		c.nameLabel.text = items[indexPath.row]
+		c.setupViews()
 		return c
 	}
 	
