@@ -60,6 +60,7 @@
 		769285281E26B8D20034F91F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7692852A1E26B9F90034F91F /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		7692852B1E26B9F90034F91F /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		7692852D1E26BB330034F91F /* tutorial-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "tutorial-Bridging-Header.h"; path = "tutorial/tutorial-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +92,7 @@
 		769284E71E2689FB0034F91F = {
 			isa = PBXGroup;
 			children = (
+				7692852D1E26BB330034F91F /* tutorial-Bridging-Header.h */,
 				769284F21E2689FB0034F91F /* tutorial */,
 				769285071E2689FB0034F91F /* tutorialTests */,
 				769285121E2689FB0034F91F /* tutorialUITests */,

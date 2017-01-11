@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkoutViewController: UIViewController {
+class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
     let defs = UserDefaults()
     let repsKey = "repsDefaultKey"
