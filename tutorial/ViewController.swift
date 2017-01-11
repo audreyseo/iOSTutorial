@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
 	let cellId = "cellId"
 	
-	var items:[String] = ["Hello World"]
+	var items:[String] = ["Chest & Back","Shoulders & Arms"]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -36,9 +36,17 @@ class ViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let c = tableView.dequeueReusableCell(withIdentifier: cellId) as! Cell
 		c.nameLabel.text = items[indexPath.row]
+        c.accessoryType = .disclosureIndicator
 		c.setupViews()
 		return c
 	}
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "Workout")
+//        next.title ] 
+        navigationController?.pushViewController(next!, animated: true)
+        
+    }
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return items.count
