@@ -19,6 +19,7 @@
 		769285261E26B87E0034F91F /* iCarousel.h in Sources */ = {isa = PBXBuildFile; fileRef = 769285241E26B87E0034F91F /* iCarousel.h */; };
 		769285271E26B87E0034F91F /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 769285251E26B87E0034F91F /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		769285291E26B8D20034F91F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769285281E26B8D20034F91F /* QuartzCore.framework */; };
+		7692852C1E26B9F90034F91F /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692852B1E26B9F90034F91F /* iCarousel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		769285241E26B87E0034F91F /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = ../libraries/iCarousel_Repo/iCarousel/iCarousel.h; sourceTree = "<group>"; };
 		769285251E26B87E0034F91F /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = ../libraries/iCarousel_Repo/iCarousel/iCarousel.m; sourceTree = "<group>"; };
 		769285281E26B8D20034F91F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7692852A1E26B9F90034F91F /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		7692852B1E26B9F90034F91F /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 				769284FA1E2689FB0034F91F /* Assets.xcassets */,
 				769284FC1E2689FB0034F91F /* LaunchScreen.storyboard */,
 				769284FF1E2689FB0034F91F /* Info.plist */,
+				7692852A1E26B9F90034F91F /* iCarousel.h */,
+				7692852B1E26B9F90034F91F /* iCarousel.m */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				769284F41E2689FB0034F91F /* AppDelegate.swift in Sources */,
 				769285221E268A540034F91F /* Cell.swift in Sources */,
 				769285261E26B87E0034F91F /* iCarousel.h in Sources */,
+				7692852C1E26B9F90034F91F /* iCarousel.m in Sources */,
 				769285271E26B87E0034F91F /* iCarousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
