@@ -10,12 +10,13 @@ import UIKit
 
 class ViewController: UITableViewController {
 	let cellId = "cellId"
-	var titles:[String] = ["Workouts 1", "Workouts 2"]
-	var items:[[String]] = [["Chest & Back","Shoulders & Arms"], ["Blah"]]
+	var titles:[String] = ["P90X", "P90X2"] //, "P90X3"]
+	var items:[[String]] = [["Chest & Back", "Plyometrics", "Shoulders & Arms", "Yoga X", "Legs and Back", "Kenpo X", "X Stretch", "Core Synergistics", "Chests, Shoulders & Triceps", "Back & Biceps", "Cardio X"], ["X2 Core", "Plyocide", "X2 Recovery + Mobility", "X2 Total Body", "X2 Ab Ripper", "X2 Yoga", "X2 Balance + Power", "Chest + Back + Balance", "X2 Shoulders + Arms", "Base + Back", "P.A.P. Lower", "P.A.P. Lower", "V Sculpt", "X2 Chest + Shoulder + Tris"]]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
+		self.navigationItem.title = "Choose Workout"
 		
 		tableView.register(Cell.self, forCellReuseIdentifier: cellId)
 	}
@@ -45,7 +46,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let next = self.storyboard?.instantiateViewController(withIdentifier: "Workout")
-//        next.title ] 
+        next?.title = items[indexPath.section][indexPath.row]
         navigationController?.pushViewController(next!, animated: true)
         
     }
