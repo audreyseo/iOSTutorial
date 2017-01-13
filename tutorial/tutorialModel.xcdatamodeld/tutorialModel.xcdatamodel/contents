@@ -3,11 +3,11 @@
     <entity name="Workouts" representedClassName="Workouts" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="exercise" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="num_reps" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="numReps" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="workoutName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Workouts" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Workouts" positionX="-7119" positionY="-1380" width="128" height="118"/>
     </elements>
 </model>

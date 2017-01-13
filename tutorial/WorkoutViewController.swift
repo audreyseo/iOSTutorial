@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 //enum Exercise {
 //	case bodyWeight(reps: Int)
@@ -25,6 +26,9 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	@IBOutlet var stackView: UIStackView!
 	@IBOutlet var repsIdLabel: UILabel!
 	@IBOutlet var weightIdLabel: UILabel!
+	
+	let dc = DataController()
+//	var wo: WorkoutMO = WorkoutMO()
     
     let defs = UserDefaults()
     let repsKey = "repsDefaultKey"
@@ -46,6 +50,15 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		
+		let wo = NSEntityDescription.insertNewObject(forEntityName: "Workouts", into: dc.managedObjectContext)
+		
+		do {
+			try dc.managedObjectContext.save()
+		} catch {
+			print("Failed to save the managed object context through DataController dc")
+			fatalError("Failed to save.")
+		}
 		
 		// Set up Weight and Reps
         rep.value = defs.float(forKey: repsKey)
