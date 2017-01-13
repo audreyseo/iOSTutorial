@@ -154,6 +154,15 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			print("Skipping exercise \(self.items[self.currentIndex])")
 			self.carousel.scrollToItem(at: self.currentIndex + 1, animated: true)
 			self.skipped.insert(self.currentIndex, at: 0)
+			
+			print("\n")
+			for i in 0..<self.skipped.count {
+				print("Skipped #\(i): \(self.skipped[i])")
+			}
+			
+			if self.currentIndex == self.items.count - 1 {
+				self.doneWithWorkout()
+			}
 		})
 		
 		let optionB = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -175,11 +184,37 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	override func viewWillDisappear(_ animated:Bool) {
 		print("\n\nView will disappear.\n")
 		super.viewWillDisappear(animated)
-		updateDataBatch()
+		if skipped.count > 0 {
+			skipDeleted()
+		} else {
+			updateDataBatch()
+		}
 //		carousel.scrollToItem(at: 0, animated: false)
 		UIView.animate(withDuration: 0.3, animations: {
 			self.carousel.isHidden = true
 		})
+	}
+	
+	func skipDeleted() {
+		if skipped.count > 0 {
+			for i in 0..<skipped.count {
+				dc.managedObjectContext.delete(workouts[skipped[i]])
+				workouts.remove(at: skipped[i])
+			}
+			
+			saveData(callingFunction: "skipDeleted")
+		}
+		
+	}
+	
+	func saveData(callingFunction: String) {
+		do {
+			try dc.managedObjectContext.save()
+			print("\(callingFunction)(): Successfully saved.")
+			//			entity.append(newWorkout)
+		} catch let error as NSError {
+			print("\(callingFunction)(): Could not save. \(error), \(error.userInfo)")
+		}
 	}
 	
 	func setupLabels(index:Int) {
@@ -367,7 +402,11 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	func saveReps(exerciseIndex:Int, numReps:Float) {
 		let key = getDefaultsRepKey(exerciseName: items[exerciseIndex], exerciseType: exerciseTypes[exerciseIndex])
 		defs.set(numReps, forKey: key)
-		workouts[exerciseIndex].setValue(Int(round(Double(numReps))), forKey: "numReps")
+		if workouts.count > exerciseIndex {
+			workouts[exerciseIndex].setValue(Int(round(Double(numReps))), forKey: "numReps")
+		} else {
+			print("Index too large. \(workouts.count) items in workouts array.")
+		}
 	}
 	
 	func saveWeight(exerciseIndex:Int, weightMass:Float) {
