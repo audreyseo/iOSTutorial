@@ -284,7 +284,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			workouts[index].setValue(-1, forKey: "weight")
 		}
 		workouts[index].setValue(items[index], forKeyPath: "exercise")
-		workouts[index].setValue(self.navigationItem.title, forKey: "workoutName")
+		workouts[index].setValue(workoutName(), forKey: "workoutName")
 		workouts[index].setValue(today, forKey: "date")
 	}
 	
@@ -370,7 +370,10 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			defs.set(rep.value, forKey: getRepKey(exerciseIndex: currentIndex))
 			return Int(round(rep.value))
 		} else {
-			return Int(round(defs.value(forKey: getRepKey(exerciseIndex: index)) as! Double))
+			if let val = defs.value(forKey: getRepKey(exerciseIndex: index)) {
+				return Int(round(Double(val as! Float)))
+			}
+			return 10
 		}
 	}
 	
@@ -379,7 +382,10 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			defs.set(weight.value, forKey: getWeightKey(exerciseIndex: currentIndex))
 			return Int(round(weight.value))
 		} else {
-			return Int(round(defs.value(forKey: getWeightKey(exerciseIndex: index)) as! Double))
+			if let val = defs.value(forKey: getWeightKey(exerciseIndex: index)) {
+				return Int(round(Double(val as! Float)))
+			}
+			return 10
 		}
 	}
     
@@ -415,14 +421,20 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	func showWeight() {
 		if removed {
-			stackView.addArrangedSubview(weightView)
+			UIView.animate(withDuration: 0.3) {
+				self.weightView.isHidden = false
+			}
+//			stackView.addArrangedSubview(weightView)
 			removed = !removed
 		}
 	}
 	
 	func hideWeight() {
 		if !removed {
-			stackView.removeArrangedSubview(weightView)
+			UIView.animate(withDuration: 0.3) {
+				self.weightView.isHidden = true
+			}
+//			stackView.removeArrangedSubview(weightView)
 			removed = !removed
 		}
 	}
