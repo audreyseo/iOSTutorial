@@ -141,6 +141,14 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		carousel.type = .coverFlow
     }
 	
+	
+	
+	override func viewWillDisappear(_ animated:Bool) {
+		print("\n\nView will disappear.\n")
+		super.viewWillDisappear(animated)
+		updateDataBatch()
+	}
+	
 	func setupLabels(index:Int) {
 		
 		let repValue = lastReps(exerciseIndex: index)
