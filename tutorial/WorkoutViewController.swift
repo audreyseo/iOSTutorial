@@ -57,24 +57,13 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		
-		
-//		workouts = Array(repeating: NSManagedObject(), count: items.count)
-		
-		
 		origin = coreDataLength()
 		
-		
-		
-		// If you are debugging and need to get rid of trash rows, use this function
+		// If you are debugging and need to get rid of bad rows, uncomment the following line
 //		deleteRowsFromCoreData()
 		
 		
-//		print("Have exercised today?: \(haveExercisedToday())")
-		
 		let wo = NSEntityDescription.entity(forEntityName: "Workouts", in: dc.managedObjectContext)
-		
-//		workouts = Array(repeating: NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext), count: items.count)
 		
 		if haveExercisedToday() {
 			print("Have already exercised today.")
@@ -96,14 +85,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 				workouts += [NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext)]
 				
 				saveData(callingFunction: "viewDidLoad(): adding all exercises for today")
-				
-//				do {
-//					try dc.managedObjectContext.save()
-//					print("Successfully saved.")
-//					//			entity.append(newWorkout)
-//				} catch let error as NSError {
-//					print("Could not save. \(error), \(error.userInfo)")
-//				}
 			}
 		}
 		
@@ -120,8 +101,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		weight.value = defs.float(forKey: weightKey)
 		
         
-//        rep.setValue(defs.float(forKey: repsKey), animated: false)
-        
         // do other setup stuff
         changeRepLabel()
 		changeWeightLabel()
@@ -136,18 +115,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			exerciseView.backgroundColor = UIColor.red
 			exerciseView.setupViews()
 			
-//			let label = UILabel()
-//			
-//			label.text = items[i]
-//			label.font = UIFont.systemFont(ofSize: 20)
-//			label.translatesAutoresizingMaskIntoConstraints = false
-//			let view:UIView = UIView()
-//			view.addSubview(label)
-//			view.frame.size.width = self.view.frame.size.width * 0.9
-//			view.frame.size.height = 100
-//			view.backgroundColor = UIColor.red
-//			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v(>=10)]->=2-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
-//			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-4-[v(>=5)]-4-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
 			viewDict[items[i]] = exerciseView
 		}
 		carousel.isHidden = false
