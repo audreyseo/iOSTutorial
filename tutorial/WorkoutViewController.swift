@@ -423,6 +423,9 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		if removed {
 			UIView.animate(withDuration: 0.3) {
 				self.weightView.isHidden = false
+				self.weight.isHidden = false
+				self.weightLabel.isHidden = false
+				self.weightIdLabel.isHidden = false
 			}
 //			stackView.addArrangedSubview(weightView)
 			removed = !removed
@@ -433,6 +436,9 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		if !removed {
 			UIView.animate(withDuration: 0.3) {
 				self.weightView.isHidden = true
+				self.weight.isHidden = true
+				self.weightLabel.isHidden = true
+				self.weightIdLabel.isHidden = true
 			}
 //			stackView.removeArrangedSubview(weightView)
 			removed = !removed
