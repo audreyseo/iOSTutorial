@@ -19,6 +19,7 @@
 		769285291E26B8D20034F91F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769285281E26B8D20034F91F /* QuartzCore.framework */; };
 		7692852E1E26BC720034F91F /* tutorial-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 7692852D1E26BB330034F91F /* tutorial-Bridging-Header.h */; };
 		769285301E26BD9C0034F91F /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692852B1E26B9F90034F91F /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		769285321E2923F90034F91F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769285311E2923F90034F91F /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		7692852A1E26B9F90034F91F /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = tutorial/iCarousel.h; sourceTree = "<group>"; };
 		7692852B1E26B9F90034F91F /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = tutorial/iCarousel.m; sourceTree = "<group>"; };
 		7692852D1E26BB330034F91F /* tutorial-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tutorial-Bridging-Header.h"; sourceTree = "<group>"; };
+		769285311E2923F90034F91F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				769285321E2923F90034F91F /* CoreData.framework in Frameworks */,
 				769285291E26B8D20034F91F /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +150,7 @@
 		769285231E26B87E0034F91F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				769285311E2923F90034F91F /* CoreData.framework */,
 				769285281E26B8D20034F91F /* QuartzCore.framework */,
 				769285241E26B87E0034F91F /* iCarousel.h */,
 				769285251E26B87E0034F91F /* iCarousel.m */,
