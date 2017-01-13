@@ -34,7 +34,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 
 	var workouts:[NSManagedObject] = [NSManagedObject]()
 	var skipped:[Int] = [Int]()
-	var fetchedArray:[NSManagedObject] = [NSManagedObject]()
+	var fetchedArray:[NSManagedObject]? = [NSManagedObject]()
 	
     let defs = UserDefaults()
     let repsKey = "repsDefaultKey"
@@ -78,19 +78,32 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		
 		if haveExercisedToday() {
 			print("Have already exercised today.")
-			workouts = fetchedArray
+			let fetched = fetchedArray!
+			workouts = fetched
+			fetchedArray = nil
+			
 			origin = 0
+			
+			if workouts.count < items.count {
+				for _ in workouts.count..<items.count {
+					workouts += [NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext)]
+					
+					saveData(callingFunction: "viewDidLoad(): adding exercises for today")
+				}
+			}
 		} else {
 			for _ in 0..<items.count {
 				workouts += [NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext)]
 				
-				do {
-					try dc.managedObjectContext.save()
-					print("Successfully saved.")
-					//			entity.append(newWorkout)
-				} catch let error as NSError {
-					print("Could not save. \(error), \(error.userInfo)")
-				}
+				saveData(callingFunction: "viewDidLoad(): adding all exercises for today")
+				
+//				do {
+//					try dc.managedObjectContext.save()
+//					print("Successfully saved.")
+//					//			entity.append(newWorkout)
+//				} catch let error as NSError {
+//					print("Could not save. \(error), \(error.userInfo)")
+//				}
 			}
 		}
 		
@@ -253,12 +266,12 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			fetchedArray = try dc.managedObjectContext.fetch(fetchRequest)
 			print("\nhaveExercisedToday(): Successful.\n")
 			
-			for i in 0..<fetchedArray.count {
+			for i in 0..<fetchedArray!.count {
 				let a = i == (currentIndex + origin) ? "       " : ""
-				print("\(a)Workout #\(i): \(fetchedArray[i].value(forKey: "numReps")), \(fetchedArray[i].value(forKey: "weight")), \(fetchedArray[i].value(forKey: "exercise")), \(fetchedArray[i].value(forKey: "workoutName"))")
+				print("\(a)Workout #\(i): \(fetchedArray?[i].value(forKey: "numReps")), \(fetchedArray?[i].value(forKey: "weight")), \(fetchedArray?[i].value(forKey: "exercise")), \(fetchedArray?[i].value(forKey: "workoutName"))")
 			}
 			print("\n")
-			return fetchedArray.count > 0
+			return fetchedArray!.count > 0
 		} catch let error as NSError {
 			print("\nhaveExercisedToday(): Could not fetch. \(error), \(error.userInfo)\n")
 			return false
