@@ -34,7 +34,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	var items:[String] = ["Chest & Back","Shoulders & Arms", "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "B", "C", "D", "E", "F", "G"]
 	var exerciseTypes:[Exercise] = [.bodyWeight, .weightLifting, .bodyWeight, .bodyWeight, .weightLifting, .bodyWeight, .bodyWeight, .weightLifting, .bodyWeight]
-	var viewDict:[String:UIView?] = [String: UIView?]()
+	var viewDict:[String:WorkoutCarouselItem?] = [String: WorkoutCarouselItem?]()
     @IBOutlet weak var repLabel: UILabel!
     @IBOutlet weak var rep: UISlider!
     
@@ -45,6 +45,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
 		
 		// Set up Weight and Reps
         rep.value = defs.float(forKey: repsKey)
@@ -61,19 +62,25 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		weight.addTarget(self, action: #selector(changeWeightLabel), for: .valueChanged)
 		
 		for i in 0..<items.count {
-			let label = UILabel()
+			let exerciseView = WorkoutCarouselItem()
+			exerciseView.setSize(width: self.view.frame.size.width)
+			exerciseView.exerciseLabel.text = items[i]
+			exerciseView.backgroundColor = UIColor.red
+			exerciseView.setupViews()
 			
-			label.text = items[i]
-			label.font = UIFont.systemFont(ofSize: 20)
-			label.translatesAutoresizingMaskIntoConstraints = false
-			let view:UIView = UIView()
-			view.addSubview(label)
-			view.frame.size.width = self.view.frame.size.width * 0.9
-			view.frame.size.height = 100
-			view.backgroundColor = UIColor.red
-			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v(>=10)]->=2-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
-			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-4-[v(>=5)]-4-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
-			viewDict[items[i]] = view
+//			let label = UILabel()
+//			
+//			label.text = items[i]
+//			label.font = UIFont.systemFont(ofSize: 20)
+//			label.translatesAutoresizingMaskIntoConstraints = false
+//			let view:UIView = UIView()
+//			view.addSubview(label)
+//			view.frame.size.width = self.view.frame.size.width * 0.9
+//			view.frame.size.height = 100
+//			view.backgroundColor = UIColor.red
+//			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v(>=10)]->=2-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
+//			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-4-[v(>=5)]-4-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
+			viewDict[items[i]] = exerciseView
 		}
 		
 		carousel.dataSource = self
@@ -166,7 +173,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	}
 	
 	func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-		return (viewDict[items[index]]!)!
+		return (viewDict[items[index]]!)! as WorkoutCarouselItem
 	}
 	
 	func showWeight() {

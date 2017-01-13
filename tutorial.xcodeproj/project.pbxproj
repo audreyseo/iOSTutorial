@@ -20,6 +20,7 @@
 		7692852E1E26BC720034F91F /* tutorial-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 7692852D1E26BB330034F91F /* tutorial-Bridging-Header.h */; };
 		769285301E26BD9C0034F91F /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692852B1E26B9F90034F91F /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		769285321E2923F90034F91F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769285311E2923F90034F91F /* CoreData.framework */; };
+		769285341E2924D90034F91F /* WorkoutCarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769285331E2924D90034F91F /* WorkoutCarouselItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		7692852B1E26B9F90034F91F /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = tutorial/iCarousel.m; sourceTree = "<group>"; };
 		7692852D1E26BB330034F91F /* tutorial-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tutorial-Bridging-Header.h"; sourceTree = "<group>"; };
 		769285311E2923F90034F91F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		769285331E2924D90034F91F /* WorkoutCarouselItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutCarouselItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				769284F31E2689FB0034F91F /* AppDelegate.swift */,
 				769284F51E2689FB0034F91F /* ViewController.swift */,
 				27187ED81E26977E005C6599 /* WorkoutViewController.swift */,
+				769285331E2924D90034F91F /* WorkoutCarouselItem.swift */,
 				769285211E268A540034F91F /* Cell.swift */,
 				769284F71E2689FB0034F91F /* Main.storyboard */,
 				769284FA1E2689FB0034F91F /* Assets.xcassets */,
@@ -306,6 +309,7 @@
 			files = (
 				769285301E26BD9C0034F91F /* iCarousel.m in Sources */,
 				7692852E1E26BC720034F91F /* tutorial-Bridging-Header.h in Sources */,
+				769285341E2924D90034F91F /* WorkoutCarouselItem.swift in Sources */,
 				27187ED91E26977E005C6599 /* WorkoutViewController.swift in Sources */,
 				769284F61E2689FB0034F91F /* ViewController.swift in Sources */,
 				769284F41E2689FB0034F91F /* AppDelegate.swift in Sources */,
