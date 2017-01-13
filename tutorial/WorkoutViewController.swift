@@ -175,19 +175,11 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	func haveExercisedToday() -> Bool {
 		let start = NSCalendar.current.startOfDay(for: today)
-		print("Start of today: \(start), \(today)")
-//		let time = today.addingTimeInterval(TimeInterval())
-//		print("\(time.)")
-		print("Starting request")
 		let fetchRequest =
 			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
-		print("Starting request1")
 		let a = NSPredicate(format: "workoutName == '\(workoutName())'")
-		print("Starting request2")
 		let b = NSPredicate(format: "date >= %@", start as NSDate)
-		print("Starting request3")
 		fetchRequest.predicate = NSCompoundPredicate(type: .and, subpredicates: [a, b])
-		print("Ended creation of request")
 		
 		do {
 			fetchedArray = try dc.managedObjectContext.fetch(fetchRequest)
@@ -392,16 +384,12 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	}
     
     func rep2Value() -> Int {
-//		return repValue(index: currentIndex)
 		let k = getRepKey(exerciseIndex: currentIndex)
-//
         defs.set(rep.value, forKey: k)
-//        print(rep.value)
         return Int(round(rep.value))
     }
 	
 	func weight2Value() -> Int {
-//		return weightValue(index: currentIndex)
 		defs.set(weight.value, forKey: getWeightKey(exerciseIndex: currentIndex))
 		return Int(round(weight.value))
 	}
@@ -427,13 +415,9 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	func showWeight() {
 		if removed {
-			
 			stackView.addArrangedSubview(weightView)
 			removed = !removed
 		}
-//		weightLabel.isHidden = true
-//		weight.isHidden = true
-//		weightIdLabel.isHidden = true
 	}
 	
 	func hideWeight() {
@@ -441,9 +425,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			stackView.removeArrangedSubview(weightView)
 			removed = !removed
 		}
-//		weightLabel.isHidden = false
-//		weight.isHidden = false
-//		weightIdLabel.isHidden = false
 	}
 	
 	func carouselDidEndScrollingAnimation(_ carousel: iCarousel) {
@@ -465,8 +446,4 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			break
 		}
 	}
-	
-//	func carouselCurrentItemIndexDidChange(_ carousel: iCarousel) {
-//		print("Item changed: \(items[carousel.currentItemIndex])")
-//	}
 }
