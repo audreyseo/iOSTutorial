@@ -135,18 +135,28 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 //			view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-4-[v(>=5)]-4-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v": label]))
 			viewDict[items[i]] = exerciseView
 		}
-		
+		carousel.isHidden = false
 		carousel.dataSource = self
 		carousel.delegate = self
 		carousel.type = .coverFlow
+		
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneWithWorkout))
     }
 	
+	func doneWithWorkout() {
+		print("\n\n\nDone with workout.\n")
+		navigationController?.popViewController(animated: true)
+	}
 	
 	
 	override func viewWillDisappear(_ animated:Bool) {
 		print("\n\nView will disappear.\n")
 		super.viewWillDisappear(animated)
 		updateDataBatch()
+		carousel.scrollToItem(at: 0, animated: false)
+		UIView.animate(withDuration: 0.3, animations: {
+			self.carousel.isHidden = true
+		})
 	}
 	
 	func setupLabels(index:Int) {
