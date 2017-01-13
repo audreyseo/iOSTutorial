@@ -61,8 +61,12 @@
                                     <constraint firstAttribute="height" constant="200" id="pta-pf-fyy"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlq-Dg-T7d">
+                                <rect key="frame" x="202" y="290" width="157" height="30"/>
+                                <state key="normal" title="Skip to Next Exercise..."/>
+                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="n7C-bL-9GR">
-                                <rect key="frame" x="16" y="288" width="343" height="90"/>
+                                <rect key="frame" x="16" y="323" width="343" height="90"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ol9-TA-qFT">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="45"/>
@@ -107,18 +111,18 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="1" maxValue="30" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHH-Qh-5m0">
-                                                <rect key="frame" x="170" y="7" width="175" height="31"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="171" id="Ghc-ls-M9o"/>
-                                                </constraints>
-                                            </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSv-dD-kX6">
                                                 <rect key="frame" x="73" y="12.5" width="42" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="1" maxValue="30" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHH-Qh-5m0">
+                                                <rect key="frame" x="170" y="8" width="175" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="171" id="Ghc-ls-M9o"/>
+                                                </constraints>
+                                            </slider>
                                         </subviews>
                                         <color key="backgroundColor" red="0.88479598445595853" green="0.88479598445595853" blue="0.88479598445595853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -134,21 +138,17 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlq-Dg-T7d">
-                                <rect key="frame" x="202" y="386" width="157" height="30"/>
-                                <state key="normal" title="Skip to Next Exercise..."/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="jlq-Dg-T7d" firstAttribute="top" secondItem="Teq-80-ci5" secondAttribute="bottom" constant="8" id="2y4-FN-AVH"/>
                             <constraint firstAttribute="leadingMargin" secondItem="n7C-bL-9GR" secondAttribute="leading" id="GC8-ef-kYq"/>
+                            <constraint firstItem="n7C-bL-9GR" firstAttribute="top" secondItem="jlq-Dg-T7d" secondAttribute="bottom" constant="3" id="J4e-c0-6em"/>
                             <constraint firstItem="Teq-80-ci5" firstAttribute="top" secondItem="hxs-rv-kpx" secondAttribute="bottom" constant="18" id="Na9-rq-y4x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jlq-Dg-T7d" secondAttribute="trailing" id="NzG-cp-cMO"/>
-                            <constraint firstItem="n7C-bL-9GR" firstAttribute="top" secondItem="Teq-80-ci5" secondAttribute="bottom" constant="6" id="YN5-Uk-aNa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="n7C-bL-9GR" secondAttribute="trailing" id="h76-bV-Fki"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Teq-80-ci5" secondAttribute="trailing" constant="-17" id="oGx-YE-hNG"/>
                             <constraint firstItem="Teq-80-ci5" firstAttribute="leading" secondItem="bQG-fm-baT" secondAttribute="leadingMargin" constant="-16" id="sHr-pT-woY"/>
-                            <constraint firstItem="jlq-Dg-T7d" firstAttribute="top" secondItem="CHH-Qh-5m0" secondAttribute="bottom" constant="16" id="u5q-ga-SNG"/>
                         </constraints>
                     </view>
                     <connections>
