@@ -9,11 +9,6 @@
 import UIKit
 import CoreData
 
-//enum Exercise {
-//	case bodyWeight(reps: Int)
-//	case weightLifting(reps: Int, weight: Int)
-//}
-
 enum Exercise {
 	case bodyWeight, weightLifting
 }
@@ -262,13 +257,15 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 				}
 				origin = 0
 				
-				do {
-					try dc.managedObjectContext.save()
-					print("deleteRowsFromCoreData(): Successfully saved.")
-					//			entity.append(newWorkout)
-				} catch let error as NSError {
-					print("deleteRowsFromCoreData(): Could not save. \(error), \(error.userInfo)")
-				}
+				saveData(callingFunction: "deletRowsFromCoreData")
+				
+//				do {
+//					try dc.managedObjectContext.save()
+//					print("deleteRowsFromCoreData(): Successfully saved.")
+//					//			entity.append(newWorkout)
+//				} catch let error as NSError {
+//					print("deleteRowsFromCoreData(): Could not save. \(error), \(error.userInfo)")
+//				}
 			}
 		} catch let error as NSError {
 			print("Could not fetch and delete. \(error), \(error.userInfo)")
@@ -314,14 +311,15 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			updateData(index: i)
 		}
 		
+		saveData(callingFunction: "updateDataBatch")
 		
-		do {
-			try dc.managedObjectContext.save()
-			print("updateDataBatch(): Successfully saved.")
-			//			entity.append(newWorkout)
-		} catch let error as NSError {
-			print("updateDataBatch(): Could not save. \(error), \(error.userInfo)")
-		}
+//		do {
+//			try dc.managedObjectContext.save()
+//			print("updateDataBatch(): Successfully saved.")
+//			//			entity.append(newWorkout)
+//		} catch let error as NSError {
+//			print("updateDataBatch(): Could not save. \(error), \(error.userInfo)")
+//		}
 	}
 	
 	func updateData(index: Int) {
@@ -338,9 +336,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	
 	func insertToCoreData() {
-//		let rKey = getDefaultsRepKey(exerciseName: items[currentIndex], exerciseType: exerciseTypes[currentIndex])
-//		let wKey = getDefaultsWeightKey(exerciseName: items[currentIndex], exerciseType: exerciseTypes[currentIndex])
-		
 		let entity = NSEntityDescription.entity(forEntityName: "Workouts", in: dc.managedObjectContext)
 		let newWorkout = NSManagedObject(entity: entity!, insertInto: dc.managedObjectContext)
 		
@@ -354,13 +349,15 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		newWorkout.setValue(self.navigationItem.title, forKeyPath: "workoutName")
 		newWorkout.setValue(today, forKey: "date")
 		
-		do {
-			try dc.managedObjectContext.save()
-			print("Successfully saved.")
-//			entity.append(newWorkout)
-		} catch let error as NSError {
-			print("Could not save. \(error), \(error.userInfo)")
-		}
+		saveData(callingFunction: "insertToCoreData")
+		
+//		do {
+//			try dc.managedObjectContext.save()
+//			print("Successfully saved.")
+////			entity.append(newWorkout)
+//		} catch let error as NSError {
+//			print("Could not save. \(error), \(error.userInfo)")
+//		}
 	}
 	
 	func lastReps(exerciseIndex:Int) -> Float {
