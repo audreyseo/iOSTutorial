@@ -276,6 +276,30 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		}
 	}
 	
+	func fetchData() -> [NSManagedObject]? {
+		let fetchRequest =
+			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
+		
+		do {
+			return try dc.managedObjectContext.fetch(fetchRequest)
+//			print("Successful.")
+//			
+//			for i in 0..<workoutsDB.count {
+//				//				let a = i == (currentIndex + origin) ? "       " : ""
+//				let numSpaces = 35 - (workoutsDB[i].value(forKey: "exercise") as! String).characters.count
+//				let mass = (workoutsDB[i].value(forKey: "weight") as! Int)
+//				let massString = mass < 0 ? "" : "\(mass)lbs"
+//				
+//				let otherSpaces = 10 - massString.characters.count
+//				
+//				print("Workout #\(i): \(workoutsDB[i].value(forKey: "numReps")!)\t\(massString)\(String(repeating: " ", count: otherSpaces))\(workoutsDB[i].value(forKey: "exercise") as! String)\(String(repeating: " ", count: numSpaces))\(workoutsDB[i].value(forKey: "workoutName") as! String)")
+//			}
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+			return nil
+		}
+	}
+	
 	func fetchAndPrint() {
 		let fetchRequest =
 			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
