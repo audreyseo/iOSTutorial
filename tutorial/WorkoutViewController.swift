@@ -20,6 +20,7 @@ enum Exercise {
 
 
 class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
+	@IBOutlet var skipExercise: UIButton!
 	@IBOutlet var carousel: iCarousel!
 	@IBOutlet var weightView: UIView!
 	
@@ -32,6 +33,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	let dc = DataController()
 
 	var workouts:[NSManagedObject] = [NSManagedObject]()
+	var skipped:[Int] = [Int]()
 	var fetchedArray:[NSManagedObject] = [NSManagedObject]()
 	
     let defs = UserDefaults()
@@ -141,11 +143,32 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		carousel.type = .coverFlow
 		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneWithWorkout))
+		skipExercise.addTarget(self, action: #selector(skippingExercise), for: .touchUpInside)
     }
+	
+	func skippingExercise() {
+		
+		let alert = UIAlertController(title: "Skip Exercise \(items[currentIndex]))", message: "Are you sure you want to skip this exercise?", preferredStyle: .alert)
+		
+		let optionA = UIAlertAction(title: "Yes", style: .default, handler: { alert in
+			print("Skipping exercise \(self.items[self.currentIndex])")
+			self.carousel.scrollToItem(at: self.currentIndex + 1, animated: true)
+			self.skipped.insert(self.currentIndex, at: 0)
+		})
+		
+		let optionB = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+		
+		alert.addAction(optionA)
+		alert.addAction(optionB)
+		
+		self.navigationController?.present(alert, animated: true, completion: nil)
+	}
 	
 	func doneWithWorkout() {
 		print("\n\n\nDone with workout.\n")
 		navigationController?.popViewController(animated: true)
+		
+		// Handle the case where things have been skipped
 	}
 	
 	
@@ -153,7 +176,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		print("\n\nView will disappear.\n")
 		super.viewWillDisappear(animated)
 		updateDataBatch()
-		carousel.scrollToItem(at: 0, animated: false)
+//		carousel.scrollToItem(at: 0, animated: false)
 		UIView.animate(withDuration: 0.3, animations: {
 			self.carousel.isHidden = true
 		})

@@ -134,21 +134,28 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlq-Dg-T7d">
+                                <rect key="frame" x="202" y="386" width="157" height="30"/>
+                                <state key="normal" title="Skip to Next Exercise..."/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="n7C-bL-9GR" secondAttribute="leading" id="GC8-ef-kYq"/>
                             <constraint firstItem="Teq-80-ci5" firstAttribute="top" secondItem="hxs-rv-kpx" secondAttribute="bottom" constant="18" id="Na9-rq-y4x"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jlq-Dg-T7d" secondAttribute="trailing" id="NzG-cp-cMO"/>
                             <constraint firstItem="n7C-bL-9GR" firstAttribute="top" secondItem="Teq-80-ci5" secondAttribute="bottom" constant="6" id="YN5-Uk-aNa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="n7C-bL-9GR" secondAttribute="trailing" id="h76-bV-Fki"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Teq-80-ci5" secondAttribute="trailing" constant="-17" id="oGx-YE-hNG"/>
                             <constraint firstItem="Teq-80-ci5" firstAttribute="leading" secondItem="bQG-fm-baT" secondAttribute="leadingMargin" constant="-16" id="sHr-pT-woY"/>
+                            <constraint firstItem="jlq-Dg-T7d" firstAttribute="top" secondItem="CHH-Qh-5m0" secondAttribute="bottom" constant="16" id="u5q-ga-SNG"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="carousel" destination="Teq-80-ci5" id="KHf-fh-o4N"/>
                         <outlet property="rep" destination="lTR-CJ-YSg" id="y5G-dc-IWZ"/>
                         <outlet property="repLabel" destination="Mv8-wp-gPf" id="igY-h0-1MX"/>
+                        <outlet property="skipExercise" destination="jlq-Dg-T7d" id="spJ-Mm-v9R"/>
                         <outlet property="stackView" destination="n7C-bL-9GR" id="XJQ-Gc-9Xg"/>
                         <outlet property="weight" destination="CHH-Qh-5m0" id="yS1-RI-zIW"/>
                         <outlet property="weightIdLabel" destination="shd-iy-QaF" id="dky-HV-AQD"/>
