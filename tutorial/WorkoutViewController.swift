@@ -27,9 +27,12 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	@IBOutlet var repsIdLabel: UILabel!
 	@IBOutlet var weightIdLabel: UILabel!
 	
+	let today:Date = Date.init()
+	
 	let dc = DataController()
-//	var wo: WorkoutMO = WorkoutMO()
-    
+
+	var workouts:[NSManagedObject] = [NSManagedObject]()
+	
     let defs = UserDefaults()
     let repsKey = "repsDefaultKey"
 	let weightKey = "weightDefaultKey"
@@ -46,12 +49,33 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	@IBOutlet var weight: UISlider!
 	
 	var currentIndex = 0
+	var origin = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+//		workouts = Array(repeating: NSManagedObject(), count: items.count)
 		
-		let wo = NSEntityDescription.insertNewObject(forEntityName: "Workouts", into: dc.managedObjectContext)
+		
+		origin = coreDataLength()
+		
+		
+		let wo = NSEntityDescription.entity(forEntityName: "Workouts", in: dc.managedObjectContext)
+		
+//		workouts = Array(repeating: NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext), count: items.count)
+		
+		for i in 0..<items.count {
+			workouts += [NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext)]
+			
+			do {
+				try dc.managedObjectContext.save()
+				print("Successfully saved.")
+				//			entity.append(newWorkout)
+			} catch let error as NSError {
+				print("Could not save. \(error), \(error.userInfo)")
+			}
+		}
+		
 		
 		do {
 			try dc.managedObjectContext.save()
@@ -102,6 +126,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
     }
 	
 	func setupLabels(index:Int) {
+		
 		let repValue = lastReps(exerciseIndex: index)
 		if exerciseTypes[index] == .weightLifting {
 			let weightValue = lastWeight(exerciseIndex: index)
@@ -110,6 +135,100 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		}
 		rep.setValue(repValue, animated: true)
 		changeRepLabel()
+		
+		print("\nUpdating core data.\n")
+		updateDataBatch()
+		print("\nVerifying changes in core data.\n")
+		fetchFromCoreData()
+
+		
+//		insertToCoreData()
+	}
+	
+	func coreDataLength() -> Int {
+		let fetchRequest =
+			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
+		
+  //3
+		do {
+			let workoutsDB = try dc.managedObjectContext.fetch(fetchRequest)
+			return workoutsDB.count
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+			return -1
+		}
+	}
+	
+	func fetchFromCoreData() {
+		let fetchRequest =
+			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
+		
+  //3
+		do {
+			let workoutsDB = try dc.managedObjectContext.fetch(fetchRequest)
+			print("Successful.")
+			
+			for i in 0..<workoutsDB.count {
+				let a = i == (currentIndex + origin) ? "       " : ""
+				print("\(a)Workout #\(i): \(workoutsDB[i].value(forKey: "numReps")), \(workoutsDB[i].value(forKey: "weight")), \(workoutsDB[i].value(forKey: "exercise")), \(workoutsDB[i].value(forKey: "workoutName"))")
+			}
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+		}
+	}
+	
+	func updateDataBatch() {
+		for i in 0..<workouts.count {
+			updateData(index: i)
+		}
+		
+		
+		do {
+			try dc.managedObjectContext.save()
+			print("updateDataBatch(): Successfully saved.")
+			//			entity.append(newWorkout)
+		} catch let error as NSError {
+			print("updateDataBatch(): Could not save. \(error), \(error.userInfo)")
+		}
+	}
+	
+	func updateData(index: Int) {
+		workouts[index].setValue(repValue(index: index), forKey: "numReps")
+		if exerciseTypes[index] == .weightLifting {
+			workouts[index].setValue(weightValue(index: index), forKey: "weight")
+		} else {
+			workouts[index].setValue(-1, forKey: "weight")
+		}
+		workouts[index].setValue(items[index], forKeyPath: "exercise")
+		workouts[index].setValue(self.navigationItem.title, forKey: "workoutName")
+		workouts[index].setValue(today, forKey: "date")
+	}
+	
+	
+	func insertToCoreData() {
+//		let rKey = getDefaultsRepKey(exerciseName: items[currentIndex], exerciseType: exerciseTypes[currentIndex])
+//		let wKey = getDefaultsWeightKey(exerciseName: items[currentIndex], exerciseType: exerciseTypes[currentIndex])
+		
+		let entity = NSEntityDescription.entity(forEntityName: "Workouts", in: dc.managedObjectContext)
+		let newWorkout = NSManagedObject(entity: entity!, insertInto: dc.managedObjectContext)
+		
+		newWorkout.setValue(rep2Value(), forKeyPath: "numReps")
+		if exerciseTypes[currentIndex] == .weightLifting {
+			newWorkout.setValue(weight2Value(), forKeyPath: "weight")
+		} else {
+			newWorkout.setValue(-1, forKeyPath: "weight")
+		}
+		newWorkout.setValue(items[currentIndex], forKeyPath: "exercise")
+		newWorkout.setValue(self.navigationItem.title, forKeyPath: "workoutName")
+		newWorkout.setValue(today, forKey: "date")
+		
+		do {
+			try dc.managedObjectContext.save()
+			print("Successfully saved.")
+//			entity.append(newWorkout)
+		} catch let error as NSError {
+			print("Could not save. \(error), \(error.userInfo)")
+		}
 	}
 	
 	func lastReps(exerciseIndex:Int) -> Float {
@@ -131,10 +250,12 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	func saveReps(exerciseIndex:Int, numReps:Float) {
 		let key = getDefaultsRepKey(exerciseName: items[exerciseIndex], exerciseType: exerciseTypes[exerciseIndex])
 		defs.set(numReps, forKey: key)
+		workouts[exerciseIndex].setValue(Int(round(Double(numReps))), forKey: "numReps")
 	}
 	
 	func saveWeight(exerciseIndex:Int, weightMass:Float) {
 		let key = getDefaultsWeightKey(exerciseName: items[exerciseIndex], exerciseType: exerciseTypes[exerciseIndex])
+		workouts[exerciseIndex].setValue(Int(round(Double(weightMass))), forKey: "weight")
 		defs.set(weightMass, forKey: key)
 	}
 	
@@ -143,6 +264,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	}
 	
 	func getRepKey(exerciseIndex:Int) -> String {
+		print("getRepKey: Exercise Index: \(exerciseIndex), items length: \(items.count)")
 		return getDefaultsRepKey(exerciseName: items[exerciseIndex], exerciseType: exerciseTypes[exerciseIndex])
 	}
 	
@@ -158,14 +280,36 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 			return ""
 		}
 	}
+	
+	func repValue(index: Int) -> Int {
+		if index == currentIndex {
+			defs.set(rep.value, forKey: getRepKey(exerciseIndex: currentIndex))
+			return Int(round(rep.value))
+		} else {
+			return Int(round(defs.value(forKey: getRepKey(exerciseIndex: index)) as! Double))
+		}
+	}
+	
+	func weightValue(index: Int) -> Int {
+		if index == currentIndex {
+			defs.set(weight.value, forKey: getWeightKey(exerciseIndex: currentIndex))
+			return Int(round(weight.value))
+		} else {
+			return Int(round(defs.value(forKey: getWeightKey(exerciseIndex: index)) as! Double))
+		}
+	}
     
     func rep2Value() -> Int {
-        defs.set(rep.value, forKey: getRepKey(exerciseIndex: currentIndex))
+//		return repValue(index: currentIndex)
+		let k = getRepKey(exerciseIndex: currentIndex)
+//
+        defs.set(rep.value, forKey: k)
 //        print(rep.value)
         return Int(round(rep.value))
     }
 	
 	func weight2Value() -> Int {
+//		return weightValue(index: currentIndex)
 		defs.set(weight.value, forKey: getWeightKey(exerciseIndex: currentIndex))
 		return Int(round(weight.value))
 	}
@@ -191,6 +335,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	func showWeight() {
 		if removed {
+			
 			stackView.addArrangedSubview(weightView)
 			removed = !removed
 		}
