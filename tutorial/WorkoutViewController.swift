@@ -32,6 +32,7 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	let dc = DataController()
 
 	var workouts:[NSManagedObject] = [NSManagedObject]()
+	var fetchedArray:[NSManagedObject] = [NSManagedObject]()
 	
     let defs = UserDefaults()
     let repsKey = "repsDefaultKey"
@@ -54,25 +55,40 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		
+		
 //		workouts = Array(repeating: NSManagedObject(), count: items.count)
 		
 		
 		origin = coreDataLength()
 		
 		
+		
+		// If you are debugging and need to get rid of trash rows, use this function
+//		deleteRowsFromCoreData()
+		
+		
+//		print("Have exercised today?: \(haveExercisedToday())")
+		
 		let wo = NSEntityDescription.entity(forEntityName: "Workouts", in: dc.managedObjectContext)
 		
 //		workouts = Array(repeating: NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext), count: items.count)
 		
-		for i in 0..<items.count {
-			workouts += [NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext)]
-			
-			do {
-				try dc.managedObjectContext.save()
-				print("Successfully saved.")
-				//			entity.append(newWorkout)
-			} catch let error as NSError {
-				print("Could not save. \(error), \(error.userInfo)")
+		if haveExercisedToday() {
+			print("Have already exercised today.")
+			workouts = fetchedArray
+			origin = 0
+		} else {
+			for _ in 0..<items.count {
+				workouts += [NSManagedObject(entity: wo!, insertInto: dc.managedObjectContext)]
+				
+				do {
+					try dc.managedObjectContext.save()
+					print("Successfully saved.")
+					//			entity.append(newWorkout)
+				} catch let error as NSError {
+					print("Could not save. \(error), \(error.userInfo)")
+				}
 			}
 		}
 		
@@ -143,6 +159,74 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 
 		
 //		insertToCoreData()
+	}
+	
+	func workoutName() -> String {
+		return self.navigationItem.title!
+	}
+	
+	func haveExercisedToday() -> Bool {
+		let start = NSCalendar.current.startOfDay(for: today)
+		print("Start of today: \(start), \(today)")
+//		let time = today.addingTimeInterval(TimeInterval())
+//		print("\(time.)")
+		print("Starting request")
+		let fetchRequest =
+			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
+		print("Starting request1")
+		let a = NSPredicate(format: "workoutName == '\(workoutName())'")
+		print("Starting request2")
+		let b = NSPredicate(format: "date >= %@", start as NSDate)
+		print("Starting request3")
+		fetchRequest.predicate = NSCompoundPredicate(type: .and, subpredicates: [a, b])
+		print("Ended creation of request")
+		
+		do {
+			fetchedArray = try dc.managedObjectContext.fetch(fetchRequest)
+			print("\nhaveExercisedToday(): Successful.\n")
+			
+			for i in 0..<fetchedArray.count {
+				let a = i == (currentIndex + origin) ? "       " : ""
+				print("\(a)Workout #\(i): \(fetchedArray[i].value(forKey: "numReps")), \(fetchedArray[i].value(forKey: "weight")), \(fetchedArray[i].value(forKey: "exercise")), \(fetchedArray[i].value(forKey: "workoutName"))")
+			}
+			print("\n")
+			return fetchedArray.count > 0
+		} catch let error as NSError {
+			print("\nhaveExercisedToday(): Could not fetch. \(error), \(error.userInfo)\n")
+			return false
+		}
+		
+	}
+	
+	func deleteRowsFromCoreData() {
+		// Dangerous function, use at your own risk
+		
+		let fetchRequest =
+			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
+		
+  //3
+		do {
+			var workoutsDB = try dc.managedObjectContext.fetch(fetchRequest)
+			if origin > 0 {
+				for _ in 0..<origin {
+					dc.managedObjectContext.delete(workoutsDB[0])
+					workoutsDB.remove(at: 0)
+				}
+				origin = 0
+				
+				do {
+					try dc.managedObjectContext.save()
+					print("deleteRowsFromCoreData(): Successfully saved.")
+					//			entity.append(newWorkout)
+				} catch let error as NSError {
+					print("deleteRowsFromCoreData(): Could not save. \(error), \(error.userInfo)")
+				}
+			}
+		} catch let error as NSError {
+			print("Could not fetch and delete. \(error), \(error.userInfo)")
+		}
+		
+		
 	}
 	
 	func coreDataLength() -> Int {
