@@ -164,7 +164,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		} else {
 			updateDataBatch()
 		}
-//		carousel.scrollToItem(at: 0, animated: false)
 		UIView.animate(withDuration: 0.3, animations: {
 			self.carousel.isHidden = true
 		})
@@ -207,9 +206,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		updateDataBatch()
 		print("\nVerifying changes in core data.\n")
 		fetchFromCoreData()
-
-		
-//		insertToCoreData()
 	}
 	
 	func workoutName() -> String {
@@ -247,7 +243,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		let fetchRequest =
 			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
 		
-  //3
 		do {
 			var workoutsDB = try dc.managedObjectContext.fetch(fetchRequest)
 			if origin > 0 {
@@ -259,13 +254,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 				
 				saveData(callingFunction: "deletRowsFromCoreData")
 				
-//				do {
-//					try dc.managedObjectContext.save()
-//					print("deleteRowsFromCoreData(): Successfully saved.")
-//					//			entity.append(newWorkout)
-//				} catch let error as NSError {
-//					print("deleteRowsFromCoreData(): Could not save. \(error), \(error.userInfo)")
-//				}
 			}
 		} catch let error as NSError {
 			print("Could not fetch and delete. \(error), \(error.userInfo)")
@@ -278,7 +266,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		let fetchRequest =
 			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
 		
-  //3
 		do {
 			let workoutsDB = try dc.managedObjectContext.fetch(fetchRequest)
 			return workoutsDB.count
@@ -292,7 +279,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		let fetchRequest =
 			NSFetchRequest<NSManagedObject>(entityName: "Workouts")
 		
-  //3
 		do {
 			let workoutsDB = try dc.managedObjectContext.fetch(fetchRequest)
 			print("Successful.")
@@ -312,14 +298,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		}
 		
 		saveData(callingFunction: "updateDataBatch")
-		
-//		do {
-//			try dc.managedObjectContext.save()
-//			print("updateDataBatch(): Successfully saved.")
-//			//			entity.append(newWorkout)
-//		} catch let error as NSError {
-//			print("updateDataBatch(): Could not save. \(error), \(error.userInfo)")
-//		}
 	}
 	
 	func updateData(index: Int) {
