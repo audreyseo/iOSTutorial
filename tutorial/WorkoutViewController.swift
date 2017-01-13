@@ -150,9 +150,15 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 	
 	func doneWithWorkout() {
 		print("\n\n\nDone with workout.\n")
-		navigationController?.popViewController(animated: true)
 		
 		// Handle the case where things have been skipped
+		if currentIndex < items.count - 1 {
+			for i in currentIndex + 1..<items.count {
+				skipped.insert(i, at: 0)
+			}
+		}
+		
+		navigationController?.popViewController(animated: true)
 	}
 	
 	
@@ -175,10 +181,8 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 				dc.managedObjectContext.delete(workouts[skipped[i]])
 				workouts.remove(at: skipped[i])
 			}
-			
 			saveData(callingFunction: "skipDeleted")
 		}
-		
 	}
 	
 	func saveData(callingFunction: String) {
@@ -253,13 +257,10 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 				origin = 0
 				
 				saveData(callingFunction: "deletRowsFromCoreData")
-				
 			}
 		} catch let error as NSError {
 			print("Could not fetch and delete. \(error), \(error.userInfo)")
 		}
-		
-		
 	}
 	
 	func coreDataLength() -> Int {
@@ -328,14 +329,6 @@ class WorkoutViewController: UIViewController, iCarouselDataSource, iCarouselDel
 		newWorkout.setValue(today, forKey: "date")
 		
 		saveData(callingFunction: "insertToCoreData")
-		
-//		do {
-//			try dc.managedObjectContext.save()
-//			print("Successfully saved.")
-////			entity.append(newWorkout)
-//		} catch let error as NSError {
-//			print("Could not save. \(error), \(error.userInfo)")
-//		}
 	}
 	
 	func lastReps(exerciseIndex:Int) -> Float {
